@@ -1,0 +1,107 @@
+# Language
+$lang=en
+
+
+$contentCatalog=apparel-ukContentCatalog
+
+$productCatalog=apparelProductCatalog
+
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$catalogVersion=catalogVersion(catalog(id[default='apparelProductCatalog']),version[default='Staged'])[unique=true,default='apparelProductCatalog:Staged']
+
+
+INSERT_UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang];allowedPrincipals(uid)[default='customergroup']
+;18000;;CatTableRes;
+
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=en];name;url;category(code, $productCV);target(code)[default='sameWindow'];;
+;;HotelTableLink;Sell Online;HotelTable Link;/sellingproduct;;sameWindow;;
+
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=en];name;category(code, $productCV);target(code)[default='sameWindow'];;
+;;TableCatLink;Table Online;CatTable Link;18000;sameWindow;;
+
+
+
+# Navigation Bar Component
+INSERT_UPDATE NavigationBarCollectionComponent;$contentCV[unique=true];uid[unique=true];name;components(uid, $contentCV);&componentRef
+;;NavBarComponent;Navigation Bar Collection Componeent;BrandsBarComponent,StreetwearBarComponent,SnowBarComponent,AccessoriesBarComponent,StreetwearYouthBarComponent,SpecialOffersBarComponent,HotelTableBarComponent;NavBarComponent
+
+
+
+INSERT_UPDATE NavigationBarComponent;$contentCV[unique=true];uid[unique=true];name;wrapAfter;link(uid, $contentCV);styleClass;navigationNode(uid,$contentCV);dropDownLayout(code)[default='AUTO']
+;;HotelTableBarComponent;HotelTable Menu Bar Item;10;HotelTableLink;;HotelTableNavigationNode;
+
+
+# CMS Navigation Nodes  
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV)[mode=append];links(uid, $contentCV);&nodeRef
+;HotelTableNavigationNode;;HotelTable Menu;ApparelUKNavNode;;;HotelTableNavigationNode;
+
+
+# CMS Child Navigation Nodes  
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(uid, $contentCV);&nodeRef
+;HotelTableChildNavigationNode;;HotelTable Child Menu;HotelTableNavigationNode;TableCatLink;;;
+
+
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+;;TablePageTemplate;Table Details Page Template;product/tableDetailsPage;ProductPage
+
+
+
+
+# Product Details Page
+INSERT_UPDATE ProductPage;$contentCV[unique=true];uid[unique=true];name;title[lang=$lang];masterTemplate(uid,$contentCV);defaultPage[default='false'];approvalStatus(code)[default='approved'];restrictions(uid,$contentCV)[default='TableCatRestriction'];onlyOneRestrictionMustApply[default='false']
+;;tableDetailsPage;tableDetailsPage;Table Details;TablePageTemplate;
+
+
+# CMSCategoryRestriction 
+INSERT_UPDATE CMSCategoryRestriction;$contentCV[unique=true];uid[unique=true];name;categories(code, $productCV);pages(uid, $contentCV);;;
+;;TableCatRestriction;Restriction for Tables;18000;tableDetailsPage;;;
+
+
+
+
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='TablePageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;HeaderLinks;;;headerlinks
+;SearchBox;;;searchbox
+;MiniCart;;;minicart
+;NavigationBar;;;navigation
+;Section1;;;wide
+;Section2;;;wide
+;Section3;;;wide
+;Section4;;;wide
+;VariantSelector;;ProductVariantSelectorComponent;narrow
+;AddToCart;;ProductAddToCartComponent;narrow
+;CrossSelling;;ProductReferencesComponent;narrow
+;UpSelling;;ProductReferencesComponent;narrow
+;Footer;;;footer
+;Tabs;;CMSTabParagraphContainer
+;TopHeaderSlot;;;wide
+;BottomHeaderSlot;;;wide
+
+
+
+
+# Bind Content Slots to Page Templates
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='TablePageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-tableDetailsPage;SiteLogo;;SiteLogoSlot;true
+;;HomepageLink-tableDetailsPage;HomepageNavLink;;HomepageNavLinkSlot;true
+;;MiniCart-tableDetailsPage;MiniCart;;MiniCartSlot;true
+;;NavigationBar-tableDetailsPage;NavigationBar;;NavigationBarSlot;true
+;;Tabs-tableDetailsPage;Tabs;;TabsSlot;true
+;;Footer-tableDetailsPage;Footer;;FooterSlot;true
+;;HeaderLinks-tableDetailsPage;HeaderLinks;;HeaderLinksSlot;true
+;;SearchBox-tableDetailsPage;SearchBox;;SearchBoxSlot;true
+;;VariantSelector-tableDetailsPage;VariantSelector;;VariantSelectorSlot;true
+;;AddToCart-tableDetailsPage;AddToCart;;AddToCartSlot;true
+;;UpSelling-tableDetailsPage;UpSelling;;UpSellingSlot;true
+;;CrossSelling-tableDetailsPage;CrossSelling;;CrossSellingSlot;true
+;;TopHeaderSlot-tableDetailsPage;TopHeaderSlot;;TopHeaderSlot;true
+;;BottomHeaderSlot-tableDetailsPage;BottomHeaderSlot;;BottomHeaderSlot;true
+

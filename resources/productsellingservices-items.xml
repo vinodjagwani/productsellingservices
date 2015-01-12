@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. This software is the confidential and proprietary information 
+	of hybris ("Confidential Information"). You shall not disclose such Confidential Information and shall use it only in accordance with 
+	the terms of the license agreement you entered into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+
+		<itemtype code="SellingProduct" extends="GenericItem" jaloclass="de.hybris.platform.productsellingservices.jalo.SellingProduct"
+			generate="true" autocreate="true">
+
+			<deployment table="SellingProducts" typecode="12346" />
+
+			<attributes>
+
+				<attribute autocreate="true" qualifier="code" type="java.lang.String" generate="true">
+					<persistence type="property" qualifier="Code" />
+					<modifiers read="true" write="true" search="true" initial="true" optional="false" unique="true" />
+				</attribute>
+
+				<attribute autocreate="true" qualifier="name" type="java.lang.String">
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+
+				<attribute autocreate="true" qualifier="description" type="java.lang.String">
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property">
+						<columntype database="oracle">
+							<value>CLOB</value>
+						</columntype>
+						<columntype database="sap">
+							<value>NCLOB</value>
+						</columntype>
+						<columntype>
+							<value>HYBRIS.LONG_STRING</value>
+						</columntype>
+					</persistence>
+				</attribute>
+				
+				<attribute autocreate="true" qualifier="address" type="java.lang.String">
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property">
+						<columntype database="oracle">
+							<value>CLOB</value>
+						</columntype>
+						<columntype database="sap">
+							<value>NCLOB</value>
+						</columntype>
+						<columntype>
+							<value>HYBRIS.LONG_STRING</value>
+						</columntype>
+					</persistence>
+				</attribute>
+				
+				<attribute autocreate="true" qualifier="productAvailablity" type="java.lang.String">
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+		
+				<attribute autocreate="true" qualifier="priceOfProduct" type="java.lang.Double" generate="true">
+					<persistence type="property">
+						<columntype>
+							<value>java.math.BigDecimal</value>
+						</columntype>
+					</persistence>
+					<modifiers read="true" write="true" search="false" optional="true" />
+					<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+				</attribute>
+
+				<attribute autocreate="true" qualifier="thumbnail" type="java.lang.Object">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+
+				<attribute autocreate="true" qualifier="picture" type="Media">
+					<persistence type="property" />
+					<modifiers read="true" write="true" search="true" optional="true" />
+				</attribute>
+		
+				<attribute autocreate="true" qualifier="storename" type="java.lang.String">
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+
+
+			</attributes>
+		</itemtype>
+
+	</itemtypes>
+
+</items>

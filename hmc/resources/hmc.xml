@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2010 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<configuration xmlns="hybris.de/schemas/hmc/generic"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+	<explorertree>
+		<group name="productsellingservices">
+			<typeref type="SellingProduct" />
+		</group>
+	</explorertree>
+
+	<type name="SellingProduct" mode="append">
+		<organizer>
+			
+			<search mode="replace">
+				<condition attribute="code" />
+				<condition attribute="address" />
+			</search>
+			
+			<result>
+				<listview mode="replace">
+					<itemlayout >
+						<attribute width="120" name="code" />
+						<attribute width="120" name="name" />
+						<attribute width="180" name="description" />
+						<attribute width="180" name="address" />
+						<attribute width="220" name="productAvailablity" />
+						<attribute width="120" name="priceOfProduct" />
+						<attribute width="120" name="storename" />
+					</itemlayout>
+				</listview>
+			</result>
+			
+			<editor>
+				<tab name="tab.productsellingservices">
+					<section name="section.productsellingservices">
+						<listlayout>
+							<attribute name="code" />
+							<attribute name="name" />
+							<attribute name="address" />
+							<attribute name="description" />
+							<attribute name="priceOfProduct" />
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		
+		</organizer>
+	</type>
+
+</configuration>
